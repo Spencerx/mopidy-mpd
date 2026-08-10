@@ -396,7 +396,10 @@ class Connection:
 
         if not data:
             self.disable_recv()
-            self.actor_ref.tell({"close": True})
+            try:
+                self.actor_ref.tell({"close": True})
+            except pykka.ActorDeadError:
+                self.stop("Actor is dead.")
             return True
 
         try:

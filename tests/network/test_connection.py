@@ -445,6 +445,15 @@ class ConnectionTest(unittest.TestCase):
             call.actor_ref.tell({"close": True}),
         ]
 
+    def test_recv_callback_handles_dead_actors_on_close(self):
+        self.mock._sock = Mock(spec=socket.SocketType)
+        self.mock._sock.recv.return_value = b""
+        self.mock.actor_ref = Mock()
+        self.mock.actor_ref.tell.side_effect = pykka.ActorDeadError()
+
+        assert network.Connection.recv_callback(self.mock, sentinel.fd, GLib.IO_IN)
+        self.mock.stop.assert_called_once_with(any_unicode)
+
     def test_recv_callback_recoverable_error(self):
         self.mock._sock = Mock(spec=socket.SocketType)
 
