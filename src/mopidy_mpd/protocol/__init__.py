@@ -35,7 +35,7 @@ type ResultValue = str | int
 type ResultDict = dict[str, ResultValue]
 type ResultTuple = tuple[str, ResultValue]
 type ResultList = list[ResultTuple | ResultDict]
-type Result = None | ResultDict | ResultTuple | ResultList
+type Result = ResultDict | ResultTuple | ResultList | None
 type HandlerFunc = Callable[..., Result]
 
 

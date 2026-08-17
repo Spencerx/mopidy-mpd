@@ -11,7 +11,7 @@ if TYPE_CHECKING:
 
 
 @protocol.commands.add("sticker", list_command=False)
-def sticker(  # noqa: PLR0913
+def sticker(  # noqa: PLR0913, PLR0917
     context: MpdContext,
     action: str,
     field: str,
